@@ -41,14 +41,26 @@
         </div>
     </nav>
 
-    @yield('content')
-    <div id="newsletter" class="mx-auto p-3 m-10 ">
-        <div class="bg-slate-100 p-5 rounded-lg border-2 border-gray-200 text-center">
-            <form action="" method="POST">
-                @csrf
-                <input type="text" name="email" placeholder="example@email.com" class="border-slate-200 border-2 px-2 py-3">
-                <input type="submit" value="제출" class="px-2 py-3 bg-blue-900 text-white rounded-lg w-24 ml-2">
-            </form>
+    <div class="flex bg-gray-50">
+        <nav class="basis-48 bg-white p-3 shrink-0">
+            <div class="mb-2">
+                <div class="font-bold mb-1">포스트관리</div>
+                <ul class="pl-2 text-gray-900">
+                    <li class="hover:text-blue-700"><a href="{{ route('admin.posts.index') }}">목록</a></li>
+                    <li class="hover:text-blue-700"><a href="{{ route('admin.posts.create') }}">글쓰기</a></li>
+                </ul>
+            </div>
+            <div class="mb-2">
+                <div class="font-bold mb-1">설정</div>
+                <ul class="pl-2 text-gray-900">
+                    <li class="hover:text-blue-700"><a href="">일반</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="w-full p-5">
+            <div class="bg-white p-5 rounded-lg shadow-md overflow-x-auto">
+                @yield('content')
+            </div>
         </div>
     </div>
 </body>
