@@ -21,7 +21,12 @@
                 <td class="border border-gray-400 p-1">{{ $post->user->name }}</td>
                 <td class="border border-gray-400 p-1">{{ $post->updated_at->diffforhumans() }}</td>
                 <td class="border border-gray-400 p-1 text-center">
-                    <span class="rounded-lg bg-green-600 text-white py-2 text-xs">발행</span>
+                    @if($post->published_at)
+                        <span class="rounded-lg bg-green-600 text-white p-2 text-xs">발행</span>
+                    @else
+                        <span class="rounded-lg bg-gray-600 text-white p-2 text-xs">미발행</span>
+                    @endif
+
                 </td>
             </tr>
         @endforeach

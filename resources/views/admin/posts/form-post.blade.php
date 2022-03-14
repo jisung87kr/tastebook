@@ -1,4 +1,8 @@
 <div class="flex">
+    <lable class="mr-2 basis-20 shrink-0" for="published_at">발행</lable>
+    <input type="checkbox" name="published_at" value="1" @if($post->published_at) checked @endif>
+</div>
+<div class="flex mt-2">
     <lable class="mr-2 basis-20 shrink-0" for="category">카테고리</lable>
     <select name="category_id" id="category" class="border border-gray-200 p-1 rounded-lg">
         @foreach($categories as $category)

@@ -26,6 +26,7 @@ class PostFactory extends Factory
             'subject' => $this->faker->sentence(),
             'content' => $this->faker->paragraph(),
             'slug' => $this->faker->slug(),
+            'published_at' => $this->faker->dateTime(),
         ];
     }
 }

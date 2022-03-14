@@ -44,6 +44,7 @@ class AdminPostController extends Controller
         ]);
 
         $validatedData['slug'] = $request->input('slug') ?? $validatedData['subject'];
+        $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
 
         $post = $request->user()->posts()->create($validatedData);
         return redirect()->route('admin.posts.edit', $post->id);
@@ -55,6 +56,8 @@ class AdminPostController extends Controller
             'subject' => 'required|max:255',
             'content' => 'required'
         ]);
+
+        $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
 
         $post->update($validatedData);
         return redirect()->route('admin.posts.edit', $post->id);
