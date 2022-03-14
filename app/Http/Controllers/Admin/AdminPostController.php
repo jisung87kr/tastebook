@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use function request;
-use function view;
 
 class AdminPostController extends Controller
 {
@@ -47,6 +45,16 @@ class AdminPostController extends Controller
         $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
 
         $post = $request->user()->posts()->create($validatedData);
+
+        foreach ($request->file('files') as $index => $file) {
+            $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
+            $fileInfo['path'] = $result;
+            $fileInfo['name'] = $file->getClientOriginalName();
+            $fileInfo['size'] = $file->getSize();
+            $fileInfo['mineType'] = $file->getClientMimeType();
+            $post->attachments()->create($fileInfo);
+        }
+
         return redirect()->route('admin.posts.edit', $post->id);
     }
 
@@ -54,12 +62,21 @@ class AdminPostController extends Controller
     {
         $validatedData = $request->validate([
             'subject' => 'required|max:255',
-            'content' => 'required'
+            'content' => 'required',
         ]);
 
         $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
-
         $post->update($validatedData);
+
+        foreach ($request->file('files') as $index => $file) {
+            $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
+            $fileInfo['path'] = $result;
+            $fileInfo['name'] = $file->getClientOriginalName();
+            $fileInfo['size'] = $file->getSize();
+            $fileInfo['mineType'] = $file->getClientMimeType();
+            $post->attachments()->create($fileInfo);
+        }
+
         return redirect()->route('admin.posts.edit', $post->id);
     }
 

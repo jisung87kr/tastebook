@@ -22,6 +22,11 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function attachments()
+    {
+        return $this->morphMany(Attachment::class, 'attachmentable');
+    }
+
     public function scopePublished($query)
     {
         $query->whereNotNull('published_at');

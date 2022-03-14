@@ -28,3 +28,24 @@
         @enderror
     </div>
 </div>
+<div class="flex mt-2">
+    <lable class="mr-2 basis-20 shrink-0" for="content">이미지</lable>
+    <div class="w-full">
+        <input type="file" name="files[]" class="border border-gray-200 p-1 rounded-lg w-full" multiple>
+        @error('content')
+        <div class="text-red-500 mt-1 text-xs">{{ $message }}</div>
+        @enderror
+        @if($post->attachments)
+            <div class="mt-1 grid grid-cols-4 gap-4">
+                @foreach($post->attachments AS $attachment)
+                    <div>
+                        <a href="{{ Storage::url($attachment->path) }}" target="_blank">
+                            <img src="{{ Storage::url($attachment->path) }}" alt="">
+                        </a>
+                        <div target="_blank" class="text-xs text-gray-500 mr-2">{{ $attachment->name }}</div>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+    </div>
+</div>
