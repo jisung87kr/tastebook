@@ -46,13 +46,15 @@ class AdminPostController extends Controller
 
         $post = $request->user()->posts()->create($validatedData);
 
-        foreach ($request->file('files') as $index => $file) {
-            $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
-            $fileInfo['path'] = $result;
-            $fileInfo['name'] = $file->getClientOriginalName();
-            $fileInfo['size'] = $file->getSize();
-            $fileInfo['mineType'] = $file->getClientMimeType();
-            $post->attachments()->create($fileInfo);
+        if($request->file('files')){
+            foreach ($request->file('files') as $index => $file) {
+                $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
+                $fileInfo['path'] = $result;
+                $fileInfo['name'] = $file->getClientOriginalName();
+                $fileInfo['size'] = $file->getSize();
+                $fileInfo['mineType'] = $file->getClientMimeType();
+                $post->attachments()->create($fileInfo);
+            }
         }
 
         return redirect()->route('admin.posts.edit', $post->id);
@@ -68,13 +70,15 @@ class AdminPostController extends Controller
         $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
         $post->update($validatedData);
 
-        foreach ($request->file('files') as $index => $file) {
-            $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
-            $fileInfo['path'] = $result;
-            $fileInfo['name'] = $file->getClientOriginalName();
-            $fileInfo['size'] = $file->getSize();
-            $fileInfo['mineType'] = $file->getClientMimeType();
-            $post->attachments()->create($fileInfo);
+        if($request->file('files')){
+            foreach ($request->file('files') as $index => $file) {
+                $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
+                $fileInfo['path'] = $result;
+                $fileInfo['name'] = $file->getClientOriginalName();
+                $fileInfo['size'] = $file->getSize();
+                $fileInfo['mineType'] = $file->getClientMimeType();
+                $post->attachments()->create($fileInfo);
+            }
         }
 
         return redirect()->route('admin.posts.edit', $post->id);

@@ -38,14 +38,30 @@
         @if($post->attachments)
             <div class="mt-1 grid grid-cols-4 gap-4">
                 @foreach($post->attachments AS $attachment)
-                    <div>
+                    <div class="file-item relative border-2 border-gray-200 rounded-lg p-1" x-data x-ref="item">
                         <a href="{{ Storage::url($attachment->path) }}" target="_blank">
                             <img src="{{ Storage::url($attachment->path) }}" alt="">
                         </a>
-                        <div target="_blank" class="text-xs text-gray-500 mr-2">{{ $attachment->name }}</div>
+                        <div>
+                            <div target="_blank" class="text-xs text-gray-500 mt-2 break-words">{{ $attachment->name }}</div>
+                        </div>
+                        <div @click="removefile({{ $attachment->id }}, $refs.item)" class="text-xs p-1 bg-red-500 text-white rounded-lg absolute top-1 right-1 cursor-pointer">삭제</div>
                     </div>
                 @endforeach
             </div>
         @endif
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function removefile(id, refs){
+        event.preventDefault();
+        if(!confirm('삭제 하시겠습니까?')){
+            return false;
+        }
+        axios.delete('http://tastebook.test:81/attachments/'+id).then(function(response){
+            alert('삭제 완료');
+            refs.remove();
+        });
+    }
+</script>

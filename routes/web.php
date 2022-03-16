@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AttachmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('posts', PostController::class);
+Route::resource('attachments', AttachmentController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')->group(function(){
     Route::get('/', [AdminPostController::class, 'index'])->name('index');

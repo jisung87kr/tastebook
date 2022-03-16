@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attachment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AttachmentController extends Controller
 {
@@ -46,7 +47,7 @@ class AttachmentController extends Controller
      */
     public function show(Attachment $attachment)
     {
-        //
+
     }
 
     /**
@@ -80,6 +81,10 @@ class AttachmentController extends Controller
      */
     public function destroy(Attachment $attachment)
     {
-        //
+        if($result = $attachment->delete()){
+            Storage::delete($attachment->path);
+        }
+
+        return $result;
     }
 }
