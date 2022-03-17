@@ -53,6 +53,10 @@ class AdminPostController extends Controller
                 $fileInfo['name'] = $file->getClientOriginalName();
                 $fileInfo['size'] = $file->getSize();
                 $fileInfo['mineType'] = $file->getClientMimeType();
+                if([$width, $height] = getimagesize($file)){
+                    $fileInfo['width'] = $width;
+                    $fileInfo['height'] = $height;
+                }
                 $post->attachments()->create($fileInfo);
             }
         }

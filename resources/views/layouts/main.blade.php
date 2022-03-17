@@ -10,12 +10,13 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
+        <link rel="stylesheet" href="{{ mix('css/main.css') }}">
         <!-- Styles -->
         <script src="https://cdn.tailwindcss.com"></script>
 
         <!-- Scripts -->
-        <script src="//unpkg.com/alpinejs" defer></script>
+        <script src="{{ mix('js/app.js') }}" defer></script>
+
     </head>
 </head>
 <body>
