@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class PostFactory extends Factory
 {
-    protected $mode = Post::class;
+    protected $model = Post::class;
     /**
      * Define the model's default state.
      *
@@ -21,8 +21,8 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(),
-            'category_id' => Category::factory(),
+//            'user_id' => User::factory(),
+//            'category_id' => Category::factory(),
             'subject' => $this->faker->sentence(),
             'content' => $this->faker->paragraph(),
             'slug' => $this->faker->slug(),

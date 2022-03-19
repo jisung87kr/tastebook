@@ -27,6 +27,11 @@ class Post extends Model
         return $this->morphMany(Attachment::class, 'attachmentable');
     }
 
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
     public function scopePublished($query)
     {
         $query->whereNotNull('published_at');
