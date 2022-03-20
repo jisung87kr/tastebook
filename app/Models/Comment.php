@@ -20,4 +20,14 @@ class Comment extends Model
     {
         return $this->hasMany(Comment::class, 'parent_id', 'id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function scopeComment($query)
+    {
+        $query->whereNull('parent_id');
+    }
 }

@@ -30,5 +30,33 @@
     </div>
     <x-photoswipe></x-photoswipe>
     @endif
+
+    <div class="comment-box mt-5">
+        @if(Auth::check())
+        <h5 class="my-2">댓글을 입력하세요</h5>
+        <div class="mb-5">
+            <form action="{{ route('posts.storeComment', $post) }}" method="POST">
+                @csrf
+                <textarea name="content" id="content" cols="30" rows="10" class="border border-gray-200 p-2 w-full"></textarea>
+                <input type="submit" value="댓글등록" class="p-2 rounded-lg bg-blue-900 text-white mt-1 cursor-pointer text-sm">
+            </form>
+        </div>
+        @else
+            <div>
+                댓글을 작성하려면 <a href="{{ route('login') }}" class="text-blue-600">로그인</a> 하세요
+            </div>
+        @endif
+        <h5 class="my-2">댓글 ({{ $post->comments->count() }})</h5>
+        @forelse($post->comments()->comment()->get() as $comment)
+            <x-comment :comment="$comment"></x-comment>
+        @empty
+            <p>No comments</p>
+        @endforelse
+    </div>
+    @if(session()->has('success'))
+        <x-flash>
+            <x-slot name="message">{{ session()->get('success') }}</x-slot>
+        </x-flash>
+    @endif
 </div>
 @endsection
