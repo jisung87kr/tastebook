@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AttachmentController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,17 +20,20 @@ use Illuminate\Support\Facades\Route;
 Route::resource('posts', PostController::class);
 Route::resource('attachments', AttachmentController::class);
 
-Route::middleware(['auth:sanctum', 'verified'])->prefix('admin')->name('admin.')->group(function(){
-    Route::get('/', [AdminPostController::class, 'index'])->name('index');
+Route::middleware(['auth:sanctum', 'verified'])->group(function(){
+    Route::post('/posts/{post}/comments', [PostController::class, 'storeComment'])->name('posts.storeComment');
 
-
-    Route::prefix('posts')->name('posts.')->group(function(){
-        Route::get('/', [AdminPostController::class, 'posts'])->name('index');
-        Route::get('/edit/{post}', [AdminPostController::class, 'edit'])->name('edit');
-        Route::get('/create', [AdminPostController::class, 'create'])->name('create');
-        Route::post('/store', [AdminPostController::class, 'store'])->name('store');
-        Route::post('/update/{post}', [AdminPostController::class, 'update'])->name('update');
-        Route::post('/delete/{post}', [AdminPostController::class, 'destroy'])->name('destroy');
+    // admin
+    Route::prefix('admin')->name('admin.')->group(function(){
+        Route::get('/', [AdminPostController::class, 'index'])->name('index');
+        Route::prefix('posts')->name('posts.')->group(function(){
+            Route::get('/', [AdminPostController::class, 'posts'])->name('index');
+            Route::get('/edit/{post}', [AdminPostController::class, 'edit'])->name('edit');
+            Route::get('/create', [AdminPostController::class, 'create'])->name('create');
+            Route::post('/store', [AdminPostController::class, 'store'])->name('store');
+            Route::post('/update/{post}', [AdminPostController::class, 'update'])->name('update');
+            Route::post('/delete/{post}', [AdminPostController::class, 'destroy'])->name('destroy');
+        });
     });
 });
 
