@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -82,5 +83,22 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+
+    public function storeComment(Request $request, Post $post, Comment $comment=null)
+    {
+
+        $validated = $request->validate([
+            'content' => 'required'
+        ]);
+
+        $validated['user_id'] = $request->user()->id;
+
+        if($comment){
+            $validated['parent_id'] = $comment->id;
+        }
+        $comment = $post->comments()->create($validated);
+        session()->flash('success', '댓글이 저장되었습니다.');
+        return redirect()->route('posts.show', $post);
     }
 }

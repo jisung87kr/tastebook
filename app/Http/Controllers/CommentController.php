@@ -69,7 +69,12 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        //
+        $comment = $comment->update([
+           'content' => $request->input('content')
+        ]);
+
+        session()->flash('success', '댓글이 수정 되었습니다.');
+        return redirect()->back();
     }
 
     /**
@@ -80,6 +85,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $comment->delete();
+        session()->flash('success', '댓글이 삭제 되었습니다.');
+        return redirect()->back();
     }
 }

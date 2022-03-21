@@ -31,14 +31,35 @@
     <x-photoswipe></x-photoswipe>
     @endif
 
-    <div class="comment-box mt-5">
+    <div class="comment-box mt-5"
+         x-data="{
+            content: '',
+            action: '{{ route('posts.storeComment', $post) }}',
+            btn: '댓글등록',
+            method: 'POST',
+            update(comment) {
+                this.content = comment.content;
+                this.btn = '댓글수정';
+                this.action = '/comments/'+comment.id;
+                this.method = 'PUT';
+            },
+            reply(comment) {
+                this.btn = '댓글달기';
+                this.action = '/posts/{{ $post->id }}/comments/'+comment.id;
+                this.method = 'POST';
+            },
+         }"
+         @update="update($event.detail)"
+         @reply="reply($event.detail)"
+    >
         @if(Auth::check())
         <h5 class="my-2">댓글을 입력하세요</h5>
         <div class="mb-5">
-            <form action="{{ route('posts.storeComment', $post) }}" method="POST">
+            <form :action="action" method="POST">
                 @csrf
-                <textarea name="content" id="content" cols="30" rows="10" class="border border-gray-200 p-2 w-full"></textarea>
-                <input type="submit" value="댓글등록" class="p-2 rounded-lg bg-blue-900 text-white mt-1 cursor-pointer text-sm">
+                <input type="hidden" name="_method" :value="method">
+                <textarea name="content" id="content" cols="30" rows="10" class="border border-gray-200 p-2 w-full" x-model="content"></textarea>
+                <input type="submit" :value="btn" class="p-2 rounded-lg bg-blue-900 text-white mt-1 cursor-pointer text-sm">
             </form>
         </div>
         @else

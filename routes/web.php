@@ -21,7 +21,8 @@ Route::resource('posts', PostController::class);
 Route::resource('attachments', AttachmentController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-    Route::post('/posts/{post}/comments', [PostController::class, 'storeComment'])->name('posts.storeComment');
+    Route::post('/posts/{post}/comments/{comment?}', [PostController::class, 'storeComment'])->name('posts.storeComment');
+    Route::resource('comments', CommentController::class)->only(['update', 'destroy']);
 
     // admin
     Route::prefix('admin')->name('admin.')->group(function(){
