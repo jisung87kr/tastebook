@@ -27,14 +27,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function(){
     // admin
     Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('/', [AdminPostController::class, 'index'])->name('index');
-        Route::prefix('posts')->name('posts.')->group(function(){
-            Route::get('/', [AdminPostController::class, 'posts'])->name('index');
-            Route::get('/edit/{post}', [AdminPostController::class, 'edit'])->name('edit');
-            Route::get('/create', [AdminPostController::class, 'create'])->name('create');
-            Route::post('/store', [AdminPostController::class, 'store'])->name('store');
-            Route::post('/update/{post}', [AdminPostController::class, 'update'])->name('update');
-            Route::post('/delete/{post}', [AdminPostController::class, 'destroy'])->name('destroy');
-        });
+        Route::resource('posts', AdminPostController::class);
     });
 });
 

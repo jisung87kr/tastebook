@@ -11,11 +11,6 @@ class AdminPostController extends Controller
 {
     public function index()
     {
-        return view('dashboard');
-    }
-
-    public function posts()
-    {
         $posts = Post::filter(request(['search', 'category']))->latest()->paginate(30)->withQueryString();
         return view('admin.posts.index', compact('posts'));
     }
