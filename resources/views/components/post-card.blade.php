@@ -6,6 +6,8 @@
         <a href="{{ route('posts.show', [$post->id, 'page' => request('page') ]) }}">{{$post->subject}}</a>
     </div>
     <hr class="my-3">
-    <div class="mb-1">write by {{$post->user->name}}</div>
-    <smal class="text-slate-500">{{$post->created_at->diffforhumans()}}</smal>
+    <div>
+        <small class="mb-1">{{$post->user->name}}</small>
+        <small class="text-slate-500">{{$post->created_at->diffforhumans()}}</small>
+    </div>
 </div>
