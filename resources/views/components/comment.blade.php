@@ -7,13 +7,19 @@ x-data="{id : {{ $comment->id }} }"
             <span>{{ $comment->created_at->diffforhumans() }}</span>
         </div>
         <div class="my-1">
-            <a href="#content" class="mr-1" @click="$dispatch('update', {{ $comment }})">수정</a>
-            <a href="{{ route('comments.destroy', $comment) }}" class="mr-1" @click.prevent="$refs.form_comment_{{ $comment->id }}.submit();">삭제</a>
-            <form action="{{ route('comments.destroy', $comment) }}" method="POST" x-ref="form_comment_{{ $comment->id }}" class="hidden">
-                @csrf
-                @method('DELETE')
-            </form>
-            <a href="#content" class="mr-1" @click="$dispatch('reply', {{ $comment }})">댓글달기</a>
+            @can('update', $comment)
+                <a href="#content" class="mr-1" @click="$dispatch('update', {{ $comment }})">수정</a>
+            @endcan
+            @can('delete', $comment)
+                <a href="{{ route('comments.destroy', $comment) }}" class="mr-1" @click.prevent="$refs.form_comment_{{ $comment->id }}.submit();">삭제</a>
+                <form action="{{ route('comments.destroy', $comment) }}" method="POST" x-ref="form_comment_{{ $comment->id }}" class="hidden">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            @endcan
+            @can('create', $comment)
+                <a href="#content" class="mr-1" @click="$dispatch('reply', {{ $comment }})">댓글달기</a>
+            @endcan
         </div>
     </div>
     <hr>

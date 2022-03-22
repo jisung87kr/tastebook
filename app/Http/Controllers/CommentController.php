@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
@@ -69,6 +70,8 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
+        Gate::authorize('update', $comment);
+
         $comment = $comment->update([
            'content' => $request->input('content')
         ]);
@@ -85,6 +88,8 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        Gate::authorize('delete', $comment);
+
         $comment->delete();
         session()->flash('success', '댓글이 삭제 되었습니다.');
         return redirect()->back();

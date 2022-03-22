@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -87,6 +88,7 @@ class PostController extends Controller
 
     public function storeComment(Request $request, Post $post, Comment $comment=null)
     {
+        Gate::authorize('create', Comment::class);
 
         $validated = $request->validate([
             'content' => 'required'
