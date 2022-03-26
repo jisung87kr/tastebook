@@ -35,39 +35,41 @@ class DatabaseSeeder extends Seeder
                         ]
                     ))
                 )
+                ->hasTags(3)
             )
             ->create([
                 'name' => 'jisung',
                 'email' => 'jisung87kr@gmail.com',
             ]);
 
-        $user = User::factory(10)
-            ->has(Post::factory(10)
-                ->state(new Sequence(
-                    fn ($sequence) => [
-                        'category_id' => $categories->random(),
-                    ]
-                ))
-                ->has(Comment::factory(10)
-                    ->state(new Sequence(
-                        fn ($sequence) => [
-                            'user_id' => User::all()->random()
-                        ]
-                    ))
-                )
-            )
-            ->create();
-
-        $user[] = $jisung;
-
-        foreach (Comment::all() as $index => $comment) {
-            Comment::factory(10)
-                ->create([
-                    'user_id' => $user->pluck('id')->random(),
-                    'commentable_id' => $comment->commentable->id,
-                    'commentable_type' => Post::class,
-                    'parent_id' =>  $comment->commentable->comments->pluck('id')->random()
-                ]);
-        }
+//        $user = User::factory(10)
+//            ->has(Post::factory(10)
+//                ->state(new Sequence(
+//                    fn ($sequence) => [
+//                        'category_id' => $categories->random(),
+//                    ]
+//                ))
+//                ->has(Comment::factory(10)
+//                    ->state(new Sequence(
+//                        fn ($sequence) => [
+//                            'user_id' => User::all()->random()
+//                        ]
+//                    ))
+//                )
+//                ->hasTags(3)
+//            )
+//            ->create();
+//
+//        $user[] = $jisung;
+//
+//        foreach (Comment::all() as $index => $comment) {
+//            Comment::factory(10)
+//                ->create([
+//                    'user_id' => $user->pluck('id')->random(),
+//                    'commentable_id' => $comment->commentable->id,
+//                    'commentable_type' => Post::class,
+//                    'parent_id' =>  $comment->commentable->comments->pluck('id')->random()
+//                ]);
+//        }
     }
 }

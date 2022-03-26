@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $with = ['user', 'category', 'comments'];
+    protected $with = ['user', 'category', 'comments', 'tags'];
     protected $guarded = [];
 
     public function user()
@@ -30,6 +30,11 @@ class Post extends Model
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function scopePublished($query)
