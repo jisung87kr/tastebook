@@ -56,5 +56,11 @@ class Post extends Model
                 $query->where('id', $category)
             )
         );
+
+        $query->when($filters['tag'] ?? false, fn($query, $tag) =>
+            $query->whereHas('tags', fn($query) =>
+                $query->where('name', $tag)
+            )
+        );
     }
 }

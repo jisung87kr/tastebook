@@ -52,6 +52,15 @@
         @endif
     </div>
 </div>
+<div class="flex mt-2">
+    <lable class="mr-2 basis-20 shrink-0" for="tags">태그</lable>
+    <div class=" w-full">
+        <input type="text" name="tags" value="{{ $post->tags->pluck('name')->implode(', ') }}" class="border border-gray-200 p-1 rounded-lg w-full" id="tags">
+        @error('tags')
+        <div class="text-red-500 mt-1 text-xs">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     function removefile(id, refs){
