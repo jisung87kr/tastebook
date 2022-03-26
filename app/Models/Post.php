@@ -51,9 +51,20 @@ class Post extends Model
             )
         );
 
+        $query->when($filters['except'] ?? false, function($query, $except){
+            $excepts = array_map('trim', explode(',', $except));
+            foreach ($excepts as $index => $except) {
+                $query->where(fn($query) =>
+                    $query->where('subject', 'not like', '%' . $except . '%')
+                        ->Where('content', 'not like', '%' . $except . '%')
+                    );
+                }
+            }
+        );
+
         $query->when($filters['category'] ?? false, fn($query, $category) =>
             $query->whereHas('category', fn($query) =>
-                $query->where('id', $category)
+                $query->whereIN('id', $category)
             )
         );
 

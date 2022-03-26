@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,8 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::published()->filter(request(['search', 'category', 'tag']))->latest()->paginate(30)->withQueryString();
-        return view('post.index', compact('posts'));
+        $posts = Post::published()->filter(request(['search', 'category', 'tag', 'except']))->latest()->paginate(30)->withQueryString();
+        $categories = Category::all();
+        return view('post.index', compact('posts', 'categories'));
     }
 
     /**

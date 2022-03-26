@@ -43,7 +43,7 @@
     </nav>
 
     @yield('content')
-    <div id="newsletter" class="mx-auto p-3 m-10 ">
+    <div id="newsletter" class="mx-auto p-3 mt-10 ">
         <div class="bg-slate-100 p-5 rounded-lg border-2 border-gray-200 text-center">
             <form action="" method="POST">
                 @csrf
