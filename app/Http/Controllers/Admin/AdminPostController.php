@@ -4,15 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\AttachmentController;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AdminPostController extends Controller
 {
-    public function __construct(TagController $tagController)
+    public function __construct(TagController $tagController, AttachmentController $attachmentController)
     {
         $this->tagController = $tagController;
+        $this->attachmentController = $attachmentController;
+        $this->attachmentController->path = 'public/posts';
     }
 
     public function index()
@@ -48,18 +51,7 @@ class AdminPostController extends Controller
         $post = $request->user()->posts()->create($validatedData);
 
         if($request->file('files')){
-            foreach ($request->file('files') as $index => $file) {
-                $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
-                $fileInfo['path'] = $result;
-                $fileInfo['name'] = $file->getClientOriginalName();
-                $fileInfo['size'] = $file->getSize();
-                $fileInfo['mineType'] = $file->getClientMimeType();
-                if([$width, $height] = getimagesize($file)){
-                    $fileInfo['width'] = $width;
-                    $fileInfo['height'] = $height;
-                }
-                $post->attachments()->create($fileInfo);
-            }
+            $this->attachmentController->storeAttachment($post, $request->file('files'));
         }
 
         $this->tagController->storeTags($post, $request->input('tags'));
@@ -78,14 +70,7 @@ class AdminPostController extends Controller
         $post->update($validatedData);
 
         if($request->file('files')){
-            foreach ($request->file('files') as $index => $file) {
-                $result = $file->store('public/posts/'.date('Y').'/'.date('m').'/'.date('d'));
-                $fileInfo['path'] = $result;
-                $fileInfo['name'] = $file->getClientOriginalName();
-                $fileInfo['size'] = $file->getSize();
-                $fileInfo['mineType'] = $file->getClientMimeType();
-                $post->attachments()->create($fileInfo);
-            }
+            $this->attachmentController->storeAttachment($post, $request->file('files'));
         }
 
         $this->tagController->storeTags($post, $request->input('tags'));

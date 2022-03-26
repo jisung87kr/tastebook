@@ -19,8 +19,8 @@ return new class extends Migration
             $table->text('name');
             $table->text('mineType');
             $table->unsignedInteger('size');
-            $table->unsignedInteger('width');
-            $table->unsignedInteger('height');
+            $table->unsignedInteger('width')->nullable();
+            $table->unsignedInteger('height')->nullable();
             $table->unsignedBigInteger('attachmentable_id');
             $table->text('attachmentable_type');
             $table->timestamps();

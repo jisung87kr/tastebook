@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Attachment;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class AttachmentController extends Controller
 {
+    public $path;
+
+    public function __construct()
+    {
+        $this->path = 'public/attachments';
+    }
     /**
      * Display a listing of the resource.
      *
@@ -86,5 +93,21 @@ class AttachmentController extends Controller
         }
 
         return $result;
+    }
+
+    public function storeAttachment(Model $model, $files)
+    {
+        foreach ($files as $index => $file) {
+            $result = $file->store($this->path.'/'.date('Y').'/'.date('m').'/'.date('d'));
+            $fileInfo['path'] = $result;
+            $fileInfo['name'] = $file->getClientOriginalName();
+            $fileInfo['size'] = $file->getSize();
+            $fileInfo['mineType'] = $file->getClientMimeType();
+            if([$width, $height] = getimagesize($file)){
+                $fileInfo['width'] = $width;
+                $fileInfo['height'] = $height;
+            }
+            $model->attachments()->create($fileInfo);
+        }
     }
 }
