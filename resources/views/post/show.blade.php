@@ -31,6 +31,10 @@
     <x-photoswipe></x-photoswipe>
     @endif
 
+    <div class="my-5">
+        <x-tag :tags="$post->tags"></x-tag>
+    </div>
+
     <div class="comment-box mt-5"
          x-data="{
             content: '',

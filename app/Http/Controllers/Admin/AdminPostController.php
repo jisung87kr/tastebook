@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TagController;
 use App\Models\Post;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AdminPostController extends Controller
 {
+    public function __construct(TagController $tagController)
+    {
+        $this->tagController = $tagController;
+    }
+
     public function index()
     {
         $posts = Post::filter(request(['search', 'category']))->latest()->paginate(30)->withQueryString();
@@ -56,6 +62,8 @@ class AdminPostController extends Controller
             }
         }
 
+        $this->tagController->storeTags($post, $request->input('tags'));
+
         return redirect()->route('admin.posts.edit', $post->id);
     }
 
@@ -79,6 +87,8 @@ class AdminPostController extends Controller
                 $post->attachments()->create($fileInfo);
             }
         }
+
+        $this->tagController->storeTags($post, $request->input('tags'));
 
         return redirect()->route('admin.posts.edit', $post->id);
     }

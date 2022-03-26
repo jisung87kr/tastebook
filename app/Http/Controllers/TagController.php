@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -81,5 +82,19 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         //
+    }
+
+    public function storeTags(Model $model, $tags)
+    {
+        $modelTags = $model->tags()->pluck('name');
+        $requestTags = array_map('trim', explode(',', $tags));
+        $diff = collect($requestTags)->diff($modelTags);
+        foreach ($diff as $index => $item) {
+            $model->tags()->create([
+                'name' => $item,
+            ]);
+        }
+
+        $model->tags()->whereNotIn('name',  $requestTags)->delete();
     }
 }
