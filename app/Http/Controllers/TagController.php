@@ -90,9 +90,11 @@ class TagController extends Controller
         $requestTags = array_map('trim', explode(',', $tags));
         $diff = collect($requestTags)->diff($modelTags);
         foreach ($diff as $index => $item) {
-            $model->tags()->create([
-                'name' => $item,
-            ]);
+            if($item){
+                $model->tags()->create([
+                    'name' => $item,
+                ]);
+            }
         }
 
         $model->tags()->whereNotIn('name',  $requestTags)->delete();
