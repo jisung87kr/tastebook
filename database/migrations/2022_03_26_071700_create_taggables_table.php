@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('tag_id');
             $table->unsignedBigInteger('taggable_id');
-            $table->text('taggable_type');
+            $table->string('taggable_type');
             $table->timestamps();
         });
     }
