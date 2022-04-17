@@ -23,7 +23,7 @@
     </div>
     <small class="text-sm">작성자 {{ $post->user->name }}</small>
     <small class="text-sm text-slate-500">{{ $post->created_at->diffforhumans() }}</small>
-    <div class="mt-10">
+    <div class="my-10">
         {{$post->content}}
     </div>
     @if($post->attachments->count() > 0)
