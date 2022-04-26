@@ -30,7 +30,19 @@ class PostPolicy
      */
     public function view(User $user, Post $post)
     {
-        //
+        if($post->published_at){
+            return true;
+        }
+
+        if($user->id == $post->id){
+            return true;
+        }
+
+        if($user->can('view unpublished posts')){
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -41,7 +53,9 @@ class PostPolicy
      */
     public function create(User $user)
     {
-        //
+        if($user->can('create posts')){
+            return true;
+        }
     }
 
     /**
@@ -53,7 +67,13 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return $user->id == $post->user_id;
+        if($user->can('edit own posts')){
+            return $user->id == $post->user_id;
+        }
+
+        if($user->can('edit all posts')){
+            return true;
+        }
     }
 
     /**
@@ -65,7 +85,13 @@ class PostPolicy
      */
     public function delete(User $user, Post $post)
     {
-        return $user->id == $post->user_id;
+        if($user->can('delete own posts')){
+            return $user->id == $post->user_id;
+        }
+
+        if($user->can('delete any posts')){
+            return true;
+        }
     }
 
     /**

@@ -18,20 +18,21 @@ class AdminPostController extends Controller
         $this->attachmentController->path = 'public/posts';
     }
 
-    public function index()
-    {
+    public function index(){
         $posts = Post::filter(request(['search', 'category']))->latest()->paginate(30)->withQueryString();
         return view('admin.posts.index', compact('posts'));
     }
 
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
         $categories = Category::all();
         return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     public function create()
     {
+        $this->authorize('create', Post::class);
         $post = new Post;
         $categories = Category::all();
         return view('admin.posts.create', compact('post', 'categories'));
@@ -39,6 +40,7 @@ class AdminPostController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('create', Post::class);
         $validatedData = $request->validate([
             'subject' => 'required|max:255',
             'content' => 'required',
@@ -61,6 +63,7 @@ class AdminPostController extends Controller
 
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
         $validatedData = $request->validate([
             'subject' => 'required|max:255',
             'content' => 'required',
@@ -80,6 +83,7 @@ class AdminPostController extends Controller
 
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         $post->delete();
         return redirect()->route('admin.posts.index');
     }
