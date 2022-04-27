@@ -2,24 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\AttachmentController;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct(TagController $tagController, AttachmentController $attachmentController)
     {
-        $posts = Post::published()->filter(request(['search', 'category', 'tag', 'except']))->latest()->paginate(30)->withQueryString();
+        $this->tagController = $tagController;
+        $this->attachmentController = $attachmentController;
+        $this->attachmentController->path = 'public/posts';
+    }
+
+    public function index(){
+        $posts = Post::filter(request(['search', 'category']))->latest()->paginate(30)->withQueryString();
+        return view('admin.posts.index', compact('posts'));
+    }
+
+    public function edit(Post $post)
+    {
+        $this->authorize('update', $post);
         $categories = Category::all();
-        return view('post.index', compact('posts', 'categories'));
+        return view('post.show', compact('post'));
     }
 
     /**
@@ -29,7 +38,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $this->authorize('create', Post::class);
+        $post = new Post;
+        $categories = Category::all();
+        return view('admin.posts.create', compact('post', 'categories'));
     }
 
     /**
@@ -40,7 +52,25 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->authorize('create', Post::class);
+        $validatedData = $request->validate([
+            'subject' => 'required|max:255',
+            'content' => 'required',
+            'category_id' => 'required',
+        ]);
+
+        $validatedData['slug'] = $request->input('slug') ?? $validatedData['subject'];
+        $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
+
+        $post = $request->user()->posts()->create($validatedData);
+
+        if($request->file('files')){
+            $this->attachmentController->storeAttachment($post, $request->file('files'));
+        }
+
+        $this->tagController->storeTags($post, $request->input('tags'));
+
+        return redirect()->route('admin.posts.edit', $post->id);
     }
 
     /**
@@ -51,19 +81,8 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        Gate::authorize('view', $post);
+        $this->authorize('view', $post);
         return view('post.show', compact('post'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
     }
 
     /**
@@ -75,23 +94,34 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+        $validatedData = $request->validate([
+            'subject' => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+        $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
+        $post->update($validatedData);
+
+        if($request->file('files')){
+            $this->attachmentController->storeAttachment($post, $request->file('files'));
+        }
+
+        $this->tagController->storeTags($post, $request->input('tags'));
+
+        return redirect()->route('admin.posts.edit', $post->id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Post $post)
     {
-        //
+        $this->authorize('delete', $post);
+        $post->delete();
+        return redirect()->route('admin.posts.index');
     }
 
     public function storeComment(Request $request, Post $post, Comment $comment=null)
     {
-        Gate::authorize('create', Comment::class);
+        $this->authorize('create', Comment::class);
 
         $validated = $request->validate([
             'content' => 'required'
