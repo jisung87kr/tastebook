@@ -27,23 +27,21 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete any posts']);
         Permission::create(['name' => 'view unpublished posts']);
 
+        Permission::create(['name' => 'create comments']);
+        Permission::create(['name' => 'edit own comments']);
+        Permission::create(['name' => 'edit all comments']);
+        Permission::create(['name' => 'delete own comments']);
+        Permission::create(['name' => 'delete any comments']);
+
+        $member = Role::create(['name' => 'member']);
+        $member->givePermissionTo(['create comments', 'edit own comments', 'delete own comments']);
+
         $author = Role::create(['name' => 'author']);
-        $admin = Role::create(['name' => 'admin']);
-
         $author->givePermissionTo(['create posts', 'edit own posts', 'delete own posts']);
+        $author->givePermissionTo(['create comments', 'edit own comments', 'delete own comments']);
+
+        $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo(['view unpublished posts', 'create posts', 'edit all posts', 'delete any posts']);
-
-        $user1 = User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@admin.com'
-        ]);
-
-        $user2 = User::factory()->create([
-            'name' => 'user1',
-            'email' => 'user1@test.com'
-        ]);
-
-        $user1->assignRole('admin');
-        $user2->assignRole('author');
+        $admin->givePermissionTo(['create comments', 'edit all comments', 'delete any comments']);
     }
 }
