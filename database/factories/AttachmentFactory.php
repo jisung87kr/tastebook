@@ -42,7 +42,7 @@ class AttachmentFactory extends Factory
         [$width, $height] = getimagesize($file);
 
         return [
-            'path' => $path,
+            'path' => 'public/posts/tmp/'.$file->getClientOriginalName(),
             'name' => $file->getClientOriginalName(),
             'size' => $file->getSize(),
             'mineType' => $file->getClientMimeType(),
