@@ -34,6 +34,10 @@ class PostPolicy
             return true;
         }
 
+        if(!$user){
+            return false;
+        }
+
         if($user->id == $post->id){
             return true;
         }

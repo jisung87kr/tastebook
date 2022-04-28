@@ -64,7 +64,7 @@ class Post extends Model
 
         $query->when($filters['category'] ?? false, fn($query, $category) =>
             $query->whereHas('category', fn($query) =>
-                $query->whereIN('id', $category)
+                $query->where('id', $category)
             )
         );
 
