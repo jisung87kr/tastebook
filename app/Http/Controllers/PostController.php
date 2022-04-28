@@ -28,7 +28,7 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
         $categories = Category::all();
-        return view('post.show', compact('post'));
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
