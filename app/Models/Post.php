@@ -39,7 +39,22 @@ class Post extends Model
 
     public function scopePublished($query)
     {
-        $query->whereNotNull('published_at');
+        return $query->whereNotNull('published_at');
+    }
+
+    public function scopePublishedInAdmin($query)
+    {
+        if(!auth()->user()){
+            return $this->scopePublished($query);
+        }
+
+        if(auth()->user()->can('view own unpublished posts')){
+            return $query->whereNotNull('published_at')->orWhere('user_id', auth()->user()->id);
+        }
+
+        if(auth()->user()->can('view all unpublished posts')){
+            return $query->whereNotNull('published_at');
+        }
     }
 
     public function scopeFilter($query, array $filters)
