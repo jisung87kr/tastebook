@@ -40,9 +40,11 @@ class CommentPolicy
      * @param  \App\Models\User  $user
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function create(User $user)
+    public function create(?User $user)
     {
-        return $user;
+        if(optional($user)->can('create comments')){
+            return true;
+        }
     }
 
     /**
@@ -54,7 +56,13 @@ class CommentPolicy
      */
     public function update(?User $user, Comment $comment)
     {
-        return optional($user)->id === $comment->user_id;
+        if(optional($user)->can('edit own comments')){
+            return $user->id === $comment->user_id;
+        }
+
+        if(optional($user)->can('edit all comments ')){
+            return true;
+        }
     }
 
     /**
@@ -66,7 +74,13 @@ class CommentPolicy
      */
     public function delete(?User $user, Comment $comment)
     {
-        return optional($user)->id === $comment->user_id;
+        if(optional($user)->can('delete own comments')){
+            return $user === $comment->user_id;
+        }
+
+        if(optional($user)->can('delete all comments ')){
+            return true;
+        }
     }
 
     /**
