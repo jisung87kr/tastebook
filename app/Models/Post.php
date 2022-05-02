@@ -39,7 +39,10 @@ class Post extends Model
 
     public function scopePublished($query)
     {
-        $query->whereNotNull('published_at');
+        if(!auth()->user()->can('view unpublished posts')){
+            $query->whereNotNull('published_at');
+        }
+
     }
 
     public function scopeFilter($query, array $filters)
