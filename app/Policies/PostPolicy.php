@@ -38,11 +38,17 @@ class PostPolicy
             return false;
         }
 
-        if($user->id == $post->id){
+        if($user->id == $post->user_id){
             return true;
         }
 
-        if($user->can('view unpublished posts')){
+        if($user->can('view own unpublished posts')){
+            if($user->id == $post->user_id){
+                return true;
+            }
+        }
+
+        if($user->can('view all unpublished posts')){
             return true;
         }
 
