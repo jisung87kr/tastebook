@@ -7,9 +7,10 @@
         @include('post.include.search-fillter')
     @endif
     <div class="mt-10 mb-6">
-        <a href="" class="border border-gray-200 p-3 rounded-lg">인기순</a>
-        <a href="" class="border border-gray-200 p-3 rounded-lg">최신순</a>
-        <a href="" class="border border-gray-200 p-3 rounded-lg">댓글순</a>
+        <x-field-sort >초기화</x-field-sort>
+        <x-field-sort field="view_cnt">인기순</x-field-sort>
+        <x-field-sort field="id">최신순</x-field-sort>
+        <x-field-sort field="comment_cnt">댓글순</x-field-sort>
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         @forelse($posts as $post)

@@ -93,6 +93,25 @@ class Post extends Model
         );
     }
 
+    public function scopeFieldSort($query, $fields=[])
+    {
+        if(!$fields){
+            return $query->latest();
+        }
+
+        $query->when($fields['view_cnt'] ?? false, fn ($query, $view_cnt) =>
+            $query->orderBy('view_cnt', $view_cnt)
+        );
+
+        $query->when($fields['id'] ?? false, fn ($query, $id) =>
+            $query->orderBy('id', $id)
+        );
+
+//        $query->when($fields['comment_cnt'] ?? false, fn($query, $comment_cnt) =>
+//
+//        );
+    }
+
     public function getThumbnailUrl(){
         $image = $this->attachments->whereIn('mineType', ['image/png', 'image/jpg', 'image/jpge', 'image/gif'])->first();
         if($image){

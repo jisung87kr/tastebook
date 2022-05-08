@@ -20,8 +20,8 @@ class PostController extends Controller
         $this->attachmentController->path = 'public/posts';
     }
 
-    public function index(){
-        $posts = Post::filter(request(['search', 'category', 'except']))->published()->latest()->paginate(30)->withQueryString();
+    public function index(Request $request){
+        $posts = Post::filter(request(['search', 'category', 'except']))->published()->fieldSort(request('sort'))->paginate(30)->withQueryString();
         $categories = Category::all();
         return view('post.index', compact('posts', 'categories'));
     }
@@ -79,6 +79,7 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $this->authorize('view', $post);
+        $post->increment('view_cnt');
         return view('post.show', compact('post'));
     }
 
