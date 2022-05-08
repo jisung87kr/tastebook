@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -91,4 +92,13 @@ class Post extends Model
             )
         );
     }
+
+    public function getThumbnailUrl(){
+        $image = $this->attachments->whereIn('mineType', ['image/png', 'image/jpg', 'image/jpge', 'image/gif'])->first();
+        if($image){
+            return Storage::url($image->path);
+        }
+        return 'https://via.placeholder.com/300x300';
+    }
+
 }

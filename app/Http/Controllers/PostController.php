@@ -21,8 +21,9 @@ class PostController extends Controller
     }
 
     public function index(){
-        $posts = Post::filter(request(['search', 'category']))->published()->latest()->paginate(30)->withQueryString();
-        return view('post.index', compact('posts'));
+        $posts = Post::filter(request(['search', 'category', 'except']))->published()->latest()->paginate(30)->withQueryString();
+        $categories = Category::all();
+        return view('post.index', compact('posts', 'categories'));
     }
 
     public function edit(Post $post)
