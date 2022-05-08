@@ -23,7 +23,6 @@ class CategoryFactory extends Factory
         return [
             'categoriable_type' => Post::class,
             'name' => $this->faker->unique()->word(),
-            'slug' => $this->faker->unique()->word(),
         ];
     }
 }

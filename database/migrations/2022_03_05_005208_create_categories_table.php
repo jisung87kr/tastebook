@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('categoriable_type');
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
+            $table->string('name');
             $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();
+            $table->unique(['categoriable_type', 'name']);
         });
     }
 

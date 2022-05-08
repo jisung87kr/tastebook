@@ -21,11 +21,8 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-//            'user_id' => User::factory(),
-//            'category_id' => Category::factory(),
             'subject' => $this->faker->sentence(),
             'content' => $this->faker->paragraph(),
-            'slug' => $this->faker->slug(),
             'published_at' => $this->faker->dateTime(),
         ];
     }
