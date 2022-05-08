@@ -60,7 +60,7 @@ class CommentPolicy
             return $user->id === $comment->user_id;
         }
 
-        if(optional($user)->can('edit all comments ')){
+        if(optional($user)->can('edit all comments')){
             return true;
         }
     }
@@ -75,10 +75,10 @@ class CommentPolicy
     public function delete(?User $user, Comment $comment)
     {
         if(optional($user)->can('delete own comments')){
-            return $user === $comment->user_id;
+            return $user->id === $comment->user_id;
         }
 
-        if(optional($user)->can('delete all comments ')){
+        if(optional($user)->can('delete all comments')){
             return true;
         }
     }

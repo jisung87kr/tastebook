@@ -32,7 +32,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit own comments']);
         Permission::create(['name' => 'edit all comments']);
         Permission::create(['name' => 'delete own comments']);
-        Permission::create(['name' => 'delete any comments']);
+        Permission::create(['name' => 'delete all comments']);
 
         $member = Role::create(['name' => 'member']);
         $member->givePermissionTo(['create comments', 'edit own comments', 'delete own comments']);
@@ -43,6 +43,6 @@ class PermissionSeeder extends Seeder
 
         $admin = Role::create(['name' => 'admin']);
         $admin->givePermissionTo(['view all unpublished posts', 'create posts', 'edit all posts', 'delete any posts']);
-        $admin->givePermissionTo(['create comments', 'edit all comments', 'delete any comments']);
+        $admin->givePermissionTo(['create comments', 'edit all comments', 'delete all comments']);
     }
 }
