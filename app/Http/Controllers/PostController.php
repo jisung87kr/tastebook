@@ -9,6 +9,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\storePostRequest;
 
 class PostController extends Controller
 {
@@ -50,16 +51,11 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(storePostRequest $request)
     {
         $this->authorize('create', Post::class);
-        $validatedData = $request->validate([
-            'subject' => 'required|max:255',
-            'content' => 'required',
-            'category_id' => 'required',
-        ]);
+        $validatedData = $request->validated();
 
-        $validatedData['slug'] = $request->input('slug') ?? $validatedData['subject'];
         $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
 
         $post = $request->user()->posts()->create($validatedData);
@@ -92,13 +88,10 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(storePostRequest $request, Post $post)
     {
         $this->authorize('update', $post);
-        $validatedData = $request->validate([
-            'subject' => 'required|max:255',
-            'content' => 'required',
-        ]);
+        $validatedData = $request->validated();
 
         $validatedData['published_at'] = $request->input('published_at') ? date('Y-m-d H:i:s') : null;
         $post->update($validatedData);
@@ -108,7 +101,6 @@ class PostController extends Controller
         }
 
         $this->tagController->storeTags($post, $request->input('tags'));
-
         return redirect()->route('admin.posts.edit', $post->id);
     }
 
