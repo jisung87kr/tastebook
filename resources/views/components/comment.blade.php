@@ -23,7 +23,13 @@ x-data="{id : {{ $comment->id }} }"
         </div>
     </div>
     <hr>
-    <div class="mt-1">{{ $comment->content }}</div>
+    <div class="mt-1">
+        @if($comment->deleted_at)
+            삭제된 댓글 입니다.
+        @else
+            {{ $comment->content }}
+        @endif
+    </div>
 </div>
 @foreach($comment->comments as $childComment)
 <x-comment :comment="$childComment" class="ml-[{{ ( $loop->depth - 1) * 20 }}px]"></x-comment>

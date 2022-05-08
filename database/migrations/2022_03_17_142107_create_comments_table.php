@@ -21,6 +21,7 @@ return new class extends Migration
             $table->longText('content');
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
