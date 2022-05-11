@@ -12,5 +12,6 @@
     <div>
         <small class="mb-1">{{$post->user->name}}</small>
         <small class="text-slate-500">{{$post->created_at->diffforhumans()}}</small>
+        <small class="text-slate-500">| {{$post->comments_count}}개의 댓글</small>
     </div>
 </div>

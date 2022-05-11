@@ -12,7 +12,7 @@ class Post extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $with = ['user', 'category', 'comments', 'tags'];
+    protected $with = ['user', 'category', 'comments', 'tags', 'attachments'];
     protected $guarded = [];
 
     public function user()
@@ -107,9 +107,14 @@ class Post extends Model
             $query->orderBy('id', $id)
         );
 
-//        $query->when($fields['comment_cnt'] ?? false, fn($query, $comment_cnt) =>
-//
-//        );
+        $query->when($fields['comment_cnt'] ?? false, fn($query, $comment_cnt) =>
+            $query->orderBy('comments_count', $comment_cnt)
+        );
+    }
+
+    public function scopeCommentsCount($query)
+    {
+        $query->withCount('comments');
     }
 
     public function getThumbnailUrl(){

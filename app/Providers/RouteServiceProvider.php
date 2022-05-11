@@ -7,6 +7,7 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,11 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+        });
+
+        // post 명시적 바인딩 + 쿼리스코프(댓글수)
+        Route::bind('post', function ($value) {
+            return Post::where('id', $value)->commentsCount()->firstOrFail();
         });
     }
 
