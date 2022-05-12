@@ -44,8 +44,5 @@
                 </x-jet-button>
             </div>
         </form>
-        <div class="flex items-center mt-4">
-            <a href="{{route('register')}}">회원가입</a>
-        </div>
     </x-jet-authentication-card>
 </x-guest-layout>
