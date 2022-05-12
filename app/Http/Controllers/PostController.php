@@ -20,7 +20,7 @@ class PostController extends Controller
         $this->attachmentController->path = 'public/posts';
     }
 
-    public function index(Request $request){
+    public function index(){
         $posts = Post::filter(request(['search', 'category', 'except']))->published()->commentsCount()->fieldSort(request('sort'))->paginate(30)->withQueryString();
         $categories = Category::all();
         return view('post.index', compact('posts', 'categories'));
