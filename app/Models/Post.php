@@ -47,16 +47,8 @@ class Post extends Model
 
     public function scopePublishedInAdmin($query)
     {
-        if(!auth()->user()){
-            return $this->scopePublished($query);
-        }
-
-        if(auth()->user()->can('view own unpublished posts')){
-            return $query->whereNotNull('published_at')->orWhere('user_id', auth()->user()->id);
-        }
-
-        if(auth()->user()->can('view all unpublished posts')){
-            return $query->whereNotNull('published_at');
+        if(auth()->user()->getRoleNames()->contains('author')){
+            return $query->Where('user_id', auth()->user()->id);
         }
     }
 
