@@ -18,9 +18,6 @@
                     <x-jet-nav-link href="{{ route('admin.posts.index') }}" :active="request()->routeIs('admin.posts.index')">
                         포스팅
                     </x-jet-nav-link>
-                    <x-jet-nav-link href="{{ route('admin.posts.create') }}" :active="request()->routeIs('admin.posts.create')">
-                        회원관리
-                    </x-jet-nav-link>
                 </div>
             </div>
 

@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <x-slot name="subHeader">포스트 관리</x-slot>
+    <x-slot name="breadscrumbs">{{ Breadcrumbs::render('admin.posts.index') }}</x-slot>
     <div>
         <table class="border-collapse border border-slate-500 w-full" style="min-width: 800px;">
             <thead>

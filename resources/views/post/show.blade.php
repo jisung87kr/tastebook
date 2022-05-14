@@ -2,17 +2,15 @@
 
 @section('content')
 <div class="container mx-auto p-3">
+    <x-breadscrumbs class="mb-5">{{ Breadcrumbs::render('posts.show', $post) }}</x-breadscrumbs>
     <a href="{{route('posts.index', ['page' => request('page')])}}" class="border-2 border-gray-200 rounded-lg p-2 inline-block">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left inline-block -mt-1" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
         </svg>
         목록
     </a>
-    <div class="mt-6">
-        <x-category-link :category="$post->category"></x-category-link>
-    </div>
     <div class="subject relative pr-10">
-        <h1 class="text-3xl mt-2">{{$post->subject}}</h1>
+        <h1 class="text-3xl mt-5">{{$post->subject}}</h1>
         @can('update', $post)
             <a href="{{ route('admin.posts.edit', $post) }}" target="_blank">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil absolute top-2 right-0" viewBox="0 0 16 16">
@@ -23,6 +21,9 @@
     </div>
     <small class="text-sm">작성자 {{ $post->user->name }}</small>
     <small class="text-sm text-slate-500">{{ $post->created_at->diffforhumans() }}</small>
+    <div class="my-3">
+        <x-category-link :category="$post->category"></x-category-link>
+    </div>
     <div class="my-10">
         {{$post->content}}
     </div>

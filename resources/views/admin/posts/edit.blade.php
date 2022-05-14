@@ -1,13 +1,8 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('포스트 수정') }}
-        </h2>
-    </x-slot>
-
+<x-admin-layout>
+    <x-slot name="breadscrumbs">{{ Breadcrumbs::render('admin.posts.edit', $post) }}</x-slot>
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+        <div class="mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white">
                 <div class="p-3">
                     <div x-data>
                         <form action="{{ route('admin.posts.update', $post->id) }}" method="POST" enctype="multipart/form-data" x-ref="form">
@@ -34,4 +29,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-admin-layout>
