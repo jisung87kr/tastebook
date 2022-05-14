@@ -1,30 +1,30 @@
 <x-admin-layout>
     <x-slot name="breadscrumbs">{{ Breadcrumbs::render('admin.posts.index') }}</x-slot>
     <div>
-        <table class="border-collapse border border-slate-500 w-full" style="min-width: 800px;">
+        <table class="border-collapse w-full">
             <thead>
-            <tr>
-                <th class="border border-gray-400 p-1">아이디</th>
-                <th class="border border-gray-400 p-1">제목</th>
-                <th class="border border-gray-400 p-1">작성자</th>
-                <th class="border border-gray-400 p-1">수정일</th>
-                <th class="border border-gray-400 p-1">상태</th>
+            <tr class="border border-b-gray-400">
+                <th class="p-2 text-sm">아이디</th>
+                <th class="p-2 text-sm">제목</th>
+                <th class="p-2 text-sm">작성자</th>
+                <th class="p-2 text-sm">수정일</th>
+                <th class="p-2 text-sm">상태</th>
             </tr>
             </thead>
             <tbody>
             @foreach($posts as $post)
-                <tr>
-                    <td class="border border-gray-400 p-1">{{ $post->id }}</td>
-                    <td class="border border-gray-400 p-1">
+                <tr class="border border-b-gray-400">
+                    <td class="p-2 text-sm text-center">{{ $post->id }}</td>
+                    <td class="p-2 text-sm">
                         <a href="{{ route('admin.posts.edit', $post->id) }}">{{ $post->subject }}</a>
                     </td>
-                    <td class="border border-gray-400 p-1">{{ $post->user->name }}</td>
-                    <td class="border border-gray-400 p-1">{{ $post->updated_at->diffforhumans() }}</td>
-                    <td class="border border-gray-400 p-1 text-center">
+                    <td class="p-2 text-sm text-center">{{ $post->user->name }}</td>
+                    <td class="p-2 text-sm text-center">{{ $post->updated_at->diffforhumans() }}</td>
+                    <td class="p-2 text-sm text-center">
                         @if($post->published_at)
-                            <span class="rounded-lg bg-green-600 text-white p-2 text-xs">발행</span>
+                            <span class="rounded-lg bg-green-600 text-white px-2 py-1 text-xs">발행</span>
                         @else
-                            <span class="rounded-lg bg-gray-600 text-white p-2 text-xs">미발행</span>
+                            <span class="rounded-lg bg-gray-600 text-white px-2 py-1 text-xs">미발행</span>
                         @endif
 
                     </td>
