@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <x-slot name="breadscrumbs">{{ Breadcrumbs::render('admin.posts.create') }}</x-slot>
+    <x-slot name="breadcrumbs">{{ Breadcrumbs::render('admin.posts.create') }}</x-slot>
 
     <div class="py-12">
         <div class="mx-auto sm:px-6 lg:px-8">

@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <x-slot name="breadscrumbs">{{ Breadcrumbs::render('admin.posts.index') }}</x-slot>
+    <x-slot name="breadcrumbs">{{ Breadcrumbs::render('admin.posts.index') }}</x-slot>
     <div>
         <table class="border-collapse w-full">
             <thead>

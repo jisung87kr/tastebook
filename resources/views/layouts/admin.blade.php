@@ -7,7 +7,7 @@
         </x-leftmenu>
         <div class="w-full" style="padding-left: 192px">
             <div class="mx-auto sm:px-6 lg:px-8">
-                <x-breadscrumbs class="bg-white overflow-hidden shadow-md sm:rounded-lg my-5 p-3">{{ $breadscrumbs }}</x-breadscrumbs>
+                <x-breadcrumbs class="bg-white overflow-hidden shadow-md sm:rounded-lg my-5 p-3">{{ $breadcrumbs }}</x-breadcrumbs>
                 <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-3">
                     {{ $slot }}
                 </div>
