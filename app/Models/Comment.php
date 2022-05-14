@@ -13,6 +13,8 @@ class Comment extends Model
 
     protected $guarded = [];
 
+    protected $with = ['comments', 'user'];
+
     public function commentable()
     {
         return $this->morphTo();
