@@ -1,72 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>{{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Fonts -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-
-        <!-- Styles -->
-        <script src="https://cdn.tailwindcss.com"></script>
-
-        <!-- Scripts -->
-        <script src="//unpkg.com/alpinejs" defer></script>
-    </head>
-</head>
-<body>
-    <nav id="header" class="flex justify-between p-3 items-center">
-        <div class="">
-            <a href="{{ route('posts.index') }}" class="bg-blue-900 text-white px-5 py-3 rounded-lg inline-block">home</a>
-        </div>
-        <div class="ml-auto">
-            @auth
-                <x-dropdown>
-                    <x-slot name="trigger">
-                        {{ auth()->user()->name }}
-                    </x-slot>
-                    <x-slot name="content">
-                        <x-dropdown-item><a href="{{route('admin.index')}}">대시보드</a></x-dropdown-item>
-                        <x-dropdown-item>
-                            <a href="{{route('logout')}}" @click.prevent="document.getElementById('form-logout').submit()">로그아웃</a>
-                            <form action="{{route('logout')}}" method="POST" id="form-logout" @logout_="alert('qwe')">
-                                @csrf
-                            </form>
-                        </x-dropdown-item>
-                    </x-slot>
-                </x-dropdown>
-            @endauth
-            @guest
-                <div class="relative w-24"><a href="{{route('login')}}">로그인</a></div>
-            @endguest
-        </div>
-    </nav>
-
-    <div class="flex bg-gray-50">
-        <nav class="basis-48 bg-white p-3 shrink-0">
-            <div class="mb-2">
-                <div class="font-bold mb-1">포스트관리</div>
-                <ul class="pl-2 text-gray-900">
-                    <li class="hover:text-blue-700"><a href="{{ route('admin.posts.index') }}">목록</a></li>
-                    <li class="hover:text-blue-700"><a href="{{ route('admin.posts.create') }}">글쓰기</a></li>
-                </ul>
-            </div>
-            <div class="mb-2">
-                <div class="font-bold mb-1">설정</div>
-                <ul class="pl-2 text-gray-900">
-                    <li class="hover:text-blue-700"><a href="">일반</a></li>
-                </ul>
-            </div>
-        </nav>
-        <div class="w-full p-5">
-            <div class="bg-white p-5 rounded-lg shadow-md overflow-x-auto">
-                @yield('content')
+<x-app-layout>
+    <div class="flex">
+        <x-leftmenu class="p-5 w-48 fixed left-0 bottom-0 z-0 h-full overflow-y-auto" style="height: 100%; top:  65px;">
+            @foreach($menu as $key => $value)
+                <x-accordian :items="$value"></x-accordian>
+            @endforeach
+        </x-leftmenu>
+        <div class="w-full" style="padding-left: 192px">
+            <div class="mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-md sm:rounded-lg my-5 p-3">breadscrumb</div>
+                <div class="bg-white overflow-hidden shadow-md sm:rounded-lg p-3">
+                    {{ $slot }}
+                </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+</x-app-layout>

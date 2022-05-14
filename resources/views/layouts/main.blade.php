@@ -31,7 +31,7 @@
                         {{ auth()->user()->name }}
                     </x-slot>
                     <x-slot name="content">
-                        <x-dropdown-item><a href="{{route('admin.index')}}">대시보드</a></x-dropdown-item>
+                        <x-dropdown-item><a href="{{route('dashboard')}}">대시보드</a></x-dropdown-item>
                         <x-dropdown-item>
                                 <a href="{{route('logout')}}" @click.prevent="document.getElementById('form-logout').submit()">로그아웃</a>
                                 <form action="{{route('logout')}}" method="POST" id="form-logout" @logout_="alert('qwe')">
