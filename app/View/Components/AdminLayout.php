@@ -26,11 +26,11 @@ class AdminLayout extends Component
                 'child' => [
                     [
                         'name' => '관리',
-                        'url' => route('admin.posts.index'),
+                        'route' => 'admin.posts.index',
                     ],
                     [
                         'name' => '글쓰기',
-                        'url' => route('admin.posts.create'),
+                        'route' => 'admin.posts.create',
                     ]
                 ]
             ]

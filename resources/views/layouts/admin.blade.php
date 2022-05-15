@@ -2,7 +2,7 @@
     <div class="flex">
         <x-leftmenu class="p-5 w-48 fixed top-[64px] left-0 bottom-0 z-0 h-full overflow-y-auto">
             @foreach($menu as $key => $value)
-                <x-accordian :items="$value"></x-accordian>
+                <x-leftnav :items="$value"></x-leftnav>
             @endforeach
         </x-leftmenu>
         <div class="w-full" style="padding-left: 192px">
