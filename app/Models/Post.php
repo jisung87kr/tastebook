@@ -117,4 +117,16 @@ class Post extends Model
         return 'https://via.placeholder.com/300x300';
     }
 
+    public function next()
+    {
+        $next = $this->where('id', '>', $this->id)->orderBy('id', 'asc')->first();
+        return $next;
+    }
+
+    public function previous()
+    {
+        $prev = $this->where('id', '<', $this->id)->orderBy('id','desc')->first();
+        return $prev;
+    }
+
 }

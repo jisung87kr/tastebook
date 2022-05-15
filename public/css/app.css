@@ -1163,6 +1163,9 @@ select {
 .mt-\[150px\] {
   margin-top: 150px;
 }
+.mb-\[50px\] {
+  margin-bottom: 50px;
+}
 .block {
   display: block;
 }
