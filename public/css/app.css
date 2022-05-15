@@ -1055,6 +1055,10 @@ select {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -1165,6 +1169,9 @@ select {
 }
 .mb-\[50px\] {
   margin-bottom: 50px;
+}
+.ml-\[10px\] {
+  margin-left: 10px;
 }
 .block {
   display: block;
@@ -2076,6 +2083,10 @@ select {
 .hover\:bg-blue-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(219 234 254 / var(--tw-bg-opacity));
+}
+.hover\:bg-gray-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
 .hover\:text-gray-500:hover {
   --tw-text-opacity: 1;

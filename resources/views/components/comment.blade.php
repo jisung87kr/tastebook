@@ -2,11 +2,11 @@
 x-data="{id : {{ $comment->id }} }"
 >
     <div class="text-xs text-gray-800">
-        <div>
+        <div class="mb-2">
             <span>{{ $comment->user->name }}</span>
             <span>{{ $comment->created_at->diffforhumans() }}</span>
         </div>
-        <div class="my-1">
+        <div class="my-1 text-gray-500 ml-[10px]">
             @can('update', $comment)
                 <a href="#content" class="mr-1" @click="$dispatch('update', {{ $comment }})">수정</a>
             @endcan
@@ -23,7 +23,7 @@ x-data="{id : {{ $comment->id }} }"
         </div>
     </div>
     <hr>
-    <div class="mt-1">
+    <div class="my-2">
         @if($comment->deleted_at)
             삭제된 댓글 입니다.
         @else
@@ -32,6 +32,6 @@ x-data="{id : {{ $comment->id }} }"
     </div>
 </div>
 @foreach($comment->comments as $childComment)
-<x-comment :comment="$childComment" class="ml-[{{ ( $loop->depth - 1) * 20 }}px]"></x-comment>
+<x-comment :comment="$childComment" style="margin-left: {{ ( $loop->depth - 1) * 20 }}px"></x-comment>
 @endforeach
 
