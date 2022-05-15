@@ -25,14 +25,30 @@ class AdminLayout extends Component
                 'url' => null,
                 'child' => [
                     [
-                        'name' => '관리',
+                        'name' => '리스트',
                         'route' => 'admin.posts.index',
                     ],
                     [
                         'name' => '글쓰기',
                         'route' => 'admin.posts.create',
+                    ],
+                    [
+                        'name' => '카테고리',
+                        'route' => 'admin.posts.create',
+                    ],
+                    [
+                        'name' => '댓글',
+                        'route' => 'admin.posts.create',
                     ]
                 ]
+            ],
+            [
+                'name' => '회원관리',
+                'url' => null,
+            ],
+            [
+                'name' => '설정',
+                'url' => null,
             ]
         ];
         return $menu;
