@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="flex">
-        <x-leftmenu class="p-5 w-48 fixed left-0 bottom-0 z-0 h-full overflow-y-auto" style="height: 100%; top:  65px;">
+        <x-leftmenu class="p-5 w-48 fixed top-[64px] left-0 bottom-0 z-0 h-full overflow-y-auto">
             @foreach($menu as $key => $value)
                 <x-accordian :items="$value"></x-accordian>
             @endforeach
