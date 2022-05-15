@@ -2,9 +2,9 @@
 
 @section('content')
 <div id="content" class="container p-6 mx-auto">
-    @include('post.include.search')
+    @include('posts.include.search')
     @if(request('search') && $posts->count())
-        @include('post.include.search-fillter')
+        @include('posts.include.search-fillter')
     @endif
     <div class="mt-10 mb-6">
         <x-field-sort >초기화</x-field-sort>

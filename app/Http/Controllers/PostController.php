@@ -23,7 +23,7 @@ class PostController extends Controller
     public function index(){
         $posts = Post::filter(request(['search', 'category', 'except']))->published()->commentsCount()->fieldSort(request('sort'))->paginate(30)->withQueryString();
         $categories = Category::all();
-        return view('post.index', compact('posts', 'categories'));
+        return view('posts.index', compact('posts', 'categories'));
     }
 
     public function edit(Post $post)
@@ -80,7 +80,7 @@ class PostController extends Controller
     {
         $this->authorize('view', $post);
         $post->increment('view_cnt');
-        return view('post.show', compact('post'));
+        return view('posts.show', compact('post'));
     }
 
     /**
