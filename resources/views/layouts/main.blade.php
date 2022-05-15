@@ -51,13 +51,19 @@
     </nav>
 
     @yield('content')
-    <div id="newsletter" class="mx-auto p-3 mt-10 ">
-        <div class="bg-slate-100 p-5 rounded-lg border-2 border-gray-200 text-center">
-            <form action="" method="POST">
-                @csrf
-                <input type="text" name="email" placeholder="example@email.com" class="border-slate-200 border-2 px-2 py-3">
-                <input type="submit" value="제출" class="px-2 py-3 bg-blue-900 text-white rounded-lg w-24 ml-2">
-            </form>
+{{--    <div id="newsletter" class="mx-auto p-3 mt-10 ">--}}
+{{--        <div class="bg-slate-100 p-5 rounded-lg border-2 border-gray-200 text-center">--}}
+{{--            <form action="" method="POST">--}}
+{{--                @csrf--}}
+{{--                <input type="text" name="email" placeholder="example@email.com" class="border-slate-200 border-2 px-2 py-3">--}}
+{{--                <input type="submit" value="제출" class="px-2 py-3 bg-blue-900 text-white rounded-lg w-24 ml-2">--}}
+{{--            </form>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+
+    <div id="footer" class="container mx-auto p-6 mt-[150px]">
+        <div class="border-t border-gray-300 pt-6 text-center text-gray-500">
+            ujsstudio87@gmail.com
         </div>
     </div>
 </body>

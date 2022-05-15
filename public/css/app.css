@@ -1154,6 +1154,15 @@ select {
 .-mt-px {
   margin-top: -1px;
 }
+.mt-20 {
+  margin-top: 5rem;
+}
+.mt-\[200px\] {
+  margin-top: 200px;
+}
+.mt-\[150px\] {
+  margin-top: 150px;
+}
 .block {
   display: block;
 }
@@ -1528,6 +1537,10 @@ select {
 .border-b-gray-200 {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(229 231 235 / var(--tw-border-opacity));
+}
+.border-t-gray-500 {
+  --tw-border-opacity: 1;
+  border-top-color: rgb(107 114 128 / var(--tw-border-opacity));
 }
 .bg-white {
   --tw-bg-opacity: 1;
