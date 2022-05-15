@@ -5,7 +5,8 @@
             <x-icons.down class="absolute right-0 top-[4px]"></x-icons.down>
         </span>
     </div>
-    <div x-show="open" class="text-left absolute bg-gray-100 rounded-lg py-3 w-24 z-50 right-0 mt-2 mx-h-6 overflow-y-auto" style="display: none; max-height: 300px;">
+    <div x-show="open" class="text-left absolute bg-gray-100 rounded-lg py-3 z-50 right-0 mt-2 mx-h-6 overflow-y-auto"
+         style="display: none; max-height: 300px; word-break: keep-all">
         {{ $content }}
     </div>
 </div>
