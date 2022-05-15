@@ -42,7 +42,7 @@
     @endif
 
     <div class="my-5">
-        <x-tag :tags="$post->tags"></x-tag>
+        <x-tag :tags="$post->tags" url="{{ route('posts.index') }}"></x-tag>
     </div>
 
     <div class="comment-box mt-5"

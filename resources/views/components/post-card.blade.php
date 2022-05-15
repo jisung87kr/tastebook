@@ -6,7 +6,7 @@
         <a href="{{ route('posts.show', [$post->id, 'page' => request('page') ]) }}">{{$post->subject}}</a>
     </div>
     <div class="my-2">
-        <x-tag :tags="$post->tags" class="border-0"></x-tag>
+        <x-tag :tags="$post->tags" url="{{ route('posts.index') }}" class="border-0"></x-tag>
     </div>
     <hr class="my-3">
     <div>
